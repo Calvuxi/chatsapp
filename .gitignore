@@ -7,6 +7,7 @@
 !listaMensajes.cpp
 !mensaje.cpp
 !servidor.cpp
+!cliente.cpp
 
 !chat.h
 !datosUsuario.h
@@ -14,5 +15,6 @@
 !listaMensajes.h
 !mensaje.h
 !servidor.h
+!cliente.h
 
 !.gitignore
