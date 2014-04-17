@@ -1,3 +1,5 @@
+#ifndef CHAT_H
+#define CHAT_H
 /* --------------- AUTHORS ---------------
 - David Pérez (hallaplay835@gmail.com).
 - Iván Calvo (calvuxi@gmail.com).
@@ -14,3 +16,5 @@
 // #### Declaraciones typedef ####
 
 // #### Prototipos ####
+
+#endif
