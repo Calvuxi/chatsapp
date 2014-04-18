@@ -13,7 +13,6 @@
 // #### Namespaces ####
 
 // #### Constantes ####
-const unsigned short MAX_CHATS = 50;
 
 // #### Declaraciones typedef ####
 typedef struct {

@@ -16,13 +16,13 @@ using namespace std;
 // #### Constantes ####
 
 // #### Declaraciones typedef ####
-typedef time_t tFecha;
+//typedef time_t tFecha;
 
 typedef struct {
-	string emisor;
-	string receptor;
-	tFecha fecha;
-	string texto;
+	//string emisor;
+	//string receptor;
+	//tFecha fecha;
+	//string texto;
 } tMensaje;
 
 // #### Prototipos ####

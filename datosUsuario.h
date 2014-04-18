@@ -25,6 +25,7 @@ typedef struct {
 // #### Prototipos ####
 // inicializar un usuario.
 // cargar un usuario de un archivo.
+bool cargar(ifstream &file, tDatosUsuario &user);
 // guardar un usuario en un archivo.
 
 #endif

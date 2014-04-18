@@ -9,11 +9,11 @@
 
 // #### UDLs ####
 #include "mensaje.h"
+#include "config.h"
 
 // #### Namespaces ####
 
 // #### Constantes ####
-const unsigned short MAX_MENSAJES = 5000;
 
 // #### Declaraciones typedef ####
 typedef struct {

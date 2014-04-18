@@ -3,6 +3,7 @@
 
 !chat.cpp
 !datosUsuario.cpp
+!listaUsuarios.cpp
 !listaChats.cpp
 !listaMensajes.cpp
 !mensaje.cpp
@@ -11,6 +12,7 @@
 
 !chat.h
 !datosUsuario.h
+!listaUsuarios.h
 !listaChats.h
 !listaMensajes.h
 !mensaje.h
