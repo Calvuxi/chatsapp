@@ -8,13 +8,19 @@
 // #### Librerías de sistema ####
 
 // #### UDLs ####
+#include "listaUsuarios.h"
 
 // #### Namespaces ####
 
 // #### Constantes ####
 
 // #### Declaraciones typedef ####
+typedef struct {
+	tListaUsuarios listaUsuarios;
+} tServidor;
 
 // #### Prototipos ####
+// enviar un mensaje.
+// obtener el buzón de mensajes de un usuario.
 
 #endif

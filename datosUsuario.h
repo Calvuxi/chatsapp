@@ -6,15 +6,25 @@
 */
 
 // #### Librerías de sistema ####
+#include <string>
 
 // #### UDLs ####
+#include "listaMensajes.h"
 
 // #### Namespaces ####
+using namespace std;
 
 // #### Constantes ####
 
 // #### Declaraciones typedef ####
+typedef struct {
+	string usuario;
+	tListaMensajes buzon;
+} tDatosUsuario;
 
 // #### Prototipos ####
+// inicializar un usuario.
+// cargar un usuario de un archivo.
+// guardar un usuario en un archivo.
 
 #endif

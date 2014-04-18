@@ -6,15 +6,27 @@
 */
 
 // #### Librerías de sistema ####
+#include <string>
 
 // #### UDLs ####
+#include "listaChats.h"
 
 // #### Namespaces ####
+using namespace std;
 
 // #### Constantes ####
 
 // #### Declaraciones typedef ####
+typedef struct {
+	string cliente;
+	tListaChats listaChats;
+} tDatosCliente;
 
 // #### Prototipos ####
+// inicializar los datos del cliente.
+// colocar los mensajes del buzón del servidor en los chats correspondientes.
+// mostrar el menú de usuario.
+// manejar el menú de usuario.
+// crear un nuevo chat.
 
 #endif
