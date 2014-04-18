@@ -10,6 +10,7 @@
 !servidor.cpp
 !cliente.cpp
 
+!config.h
 !chat.h
 !datosUsuario.h
 !listaUsuarios.h
