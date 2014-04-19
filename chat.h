@@ -25,7 +25,9 @@ typedef struct {
 
 // #### Prototipos ####
 // inicializar un chat.
+void init(tChat &ch);
 // cargar un chat de un archivo.
+bool cargar(ifstream &file, tChat &ch, string client);
 // guardar chat en un archivo.
 // mostrar cabecera de un chat.
 // mostrar los mensajes de un chat.

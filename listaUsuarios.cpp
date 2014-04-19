@@ -16,46 +16,32 @@
 // #### Declaraciones typedef ####
 
 // #### Implementaciones ####
+void init(tListaUsuarios &db) {
+	db.counter = 0;
+}
+
 bool cargar(string filename, tListaUsuarios &db) {
 	ifstream file;
 	file.open(filename.c_str());
 	if (!file.is_open()) return false;
 	else {
-		string buff; unsigned short numMensajes; bool error = false;
+		bool error = false; bool end = false;
 		
-		// Leer el primer usuario (o el centinela):
-		tDatosUsuario user;
-		error = cargar(file, user);
-		if (!error) error = insertar(db, user);
-
-		while (!error) {
-			file >> numMensajes;
-			getline(file, buff);
-			error = file.fail();
-
-			// Descartar los mensajes del usuario:
-			unsigned short i = 0;
-			while (!error && i < numMensajes) {
-				getline(file, buff);
-				error = file.fail();
-				i++;
-			}
-			
-			// Leer otro usuario:
-			if (!error) {
-				tDatosUsuario user;
-				error = cargar(file, user);
-				if (!error) error = insertar(db, user);
+		// Añadir datos de usuario:
+		while (!error && !end) {
+			tDatosUsuario du;
+			init(du);
+			error = cargar(file, du);
+			if (!error) error = insertar(db, du);
+			else if (du.usuario == CENTINELA) {
+				error = false; // Desactivar el flag de error en caso de que fuera el último elemento.
+				end = true;
 			}
 		}
 		file.close();
 
 		return error;
 	}
-}
-
-void init(tListaUsuarios &db) {
-	db.counter = 0;
 }
 
 bool insertar(tListaUsuarios &db, tDatosUsuario &user) {

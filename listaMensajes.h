@@ -23,9 +23,12 @@ typedef struct {
 
 // #### Prototipos ####
 // inicializar lista de mensajes.
+bool init(tListaMensajes &lm, unsigned short numMensajes = 0);
 // añadir un mensaje al final.
+bool insertar(tListaMensajes &lm, tMensaje &msg);
 // consultar el último elemento.
 // cargar una lista de mensajes de un archivo.
+bool cargar(ifstream &file, tListaMensajes &lm, string nombre, string client = "");
 // guardar una lista de mensajes en un archivo.
 
 #endif

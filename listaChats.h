@@ -22,10 +22,13 @@ typedef struct {
 
 // #### Prototipos ####
 // inicializar una lista de chats.
+void init(tListaChats &lch);
 // cargar una lista de chats de un archivo.
+bool cargar(string filename, tListaChats &lch);
 // guardar una lista de chats en un archivo.
 // buscar un chat por nombre en una lista de chats.
 // añadir un chat al final de una lista de chats.
+bool insertar(tListaChats &lch, tChat &ch);
 // eliminar un chat (por posición) de una lista de chats.
 // mover un chat (por posición) al final de una lista de chats.
 // ordenar una lista de chats por nombre.

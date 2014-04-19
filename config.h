@@ -17,11 +17,12 @@ using namespace std;
 const unsigned short MAX_USUARIOS = 50;
 const unsigned short MIN_USER_LENGTH = 4;
 const unsigned short MAX_USER_LENGTH = 20;
-const unsigned short MAX_MENSAJES = 206; // Da una excepción en ejecución si se pone a más de 206.
+const unsigned short MAX_MENSAJES = 100; // Da una excepción en ejecución si se pone a más de 206.
 const unsigned short MAX_CHATS = 50;
 
 const string CENTINELA = "XXX";
 const string USER_LIST = "usuarios.txt";
+const string CHAT_LIST = "_chats.txt";
 
 // #### Declaraciones typedef ####
 

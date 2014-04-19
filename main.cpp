@@ -10,6 +10,7 @@
 // #### UDLs ####
 #include "config.h"
 #include "listaUsuarios.h"
+#include "listaChats.h"
 
 // #### Namespaces ####
 using namespace std;
@@ -22,7 +23,7 @@ using namespace std;
 void chcp1252();
 int readInt(string ERR_MSG, int m, int n);
 string getClientName();
-void login(tListaUsuarios &db);
+string login(tListaUsuarios &db);
 
 // #### main() ####
 int main() {
@@ -30,9 +31,18 @@ int main() {
 
 	tListaUsuarios db; 
 	init(db);
-	cargar(USER_LIST, db);
+	if (cargar(USER_LIST, db)) cout << "No se ha podido cargar la base de datos." << endl;
+	else {
+		string client = login(db);
+		
+		tListaChats lch;
+		init(lch);
+		if (cargar(client.append(CHAT_LIST), lch)) cout << "No se han podido cargar los chats de " << client << "." << endl;
+		else {
+			cout << "¡ÉXITO!";
+		}
 
-	login(db);
+	}
 
 	return 0;
 }
@@ -69,10 +79,11 @@ string getClientName() {
 	return user;
 }
 
-void login(tListaUsuarios &db) {
-	string user = getClientName();
-	while (!buscar(user, db)) {
+string login(tListaUsuarios &db) {
+	string client = getClientName();
+	while (!buscar(client, db)) {
 		cout << "El nombre de usuario no está registrado." << endl;
-		user = getClientName();
+		client = getClientName();
 	}
+	return client;
 }
