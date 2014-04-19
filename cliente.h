@@ -24,7 +24,9 @@ typedef struct {
 
 // #### Prototipos ####
 // inicializar los datos del cliente.
+bool init(tDatosCliente &cl, string cliente);
 // colocar los mensajes del buzón del servidor en los chats correspondientes.
+bool insertar(tListaChats &lch, tListaMensajes &lm);
 // mostrar el menú de usuario.
 // manejar el menú de usuario.
 // crear un nuevo chat.

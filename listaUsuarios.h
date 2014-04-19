@@ -27,7 +27,7 @@ void init(tListaUsuarios &db);
 bool cargar(string filename, tListaUsuarios &db);
 // guardar una lista de usuarios en un archivo.
 // buscar en una lista de usuarios.
-bool buscar(string user, tListaUsuarios &db);
+bool buscar(string user, tListaUsuarios &db, unsigned short &ind);
 // insertar en una lista de usuarios.
 bool insertar(tListaUsuarios &db, tDatosUsuario &user);
 
