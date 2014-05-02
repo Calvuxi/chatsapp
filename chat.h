@@ -6,13 +6,11 @@
 */
 
 // #### Librerías de sistema ####
-#include <string>
 
 // #### UDLs ####
 #include "listaMensajes.h"
 
 // #### Namespaces ####
-using namespace std;
 
 // #### Constantes ####
 
@@ -30,6 +28,7 @@ void init(tChat &ch);
 bool cargar(ifstream &file, tChat &ch, string client);
 // guardar chat en un archivo.
 // mostrar cabecera de un chat.
+void mostrarCabecera(unsigned int i, const tChat &ch);
 // mostrar los mensajes de un chat.
 
 #endif

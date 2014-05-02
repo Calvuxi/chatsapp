@@ -45,3 +45,7 @@ bool insertar(tListaMensajes &lm, tMensaje &msg) {
 	}
 	else return true;
 }
+
+tMensaje ultimo(const tListaMensajes &lm) {
+	return lm.l[lm.counter - 1];
+}

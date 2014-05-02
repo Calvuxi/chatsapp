@@ -47,19 +47,6 @@ bool cargar(string filename, tListaChats &lch) {
 	}
 }
 
-bool buscar(string nombre, tListaChats &lch, unsigned short &ind) {
-	bool found = false;
-	unsigned short i = 0;
-	while (!found && i < lch.counter && lch.l[i].nombre <= nombre) {
-		if (lch.l[i].nombre == nombre) {
-			found = true;
-			ind = i;
-		}
-		else i++;
-	}
-	return found;
-}
-
 bool insertar(tListaChats &lch, tChat &ch) {
 	if (lch.counter < MAX_CHATS) {
 		lch.l[lch.counter] = ch;

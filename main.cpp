@@ -9,8 +9,6 @@
 
 // #### UDLs ####
 #include "config.h"
-#include "listaUsuarios.h"
-#include "listaChats.h"
 #include "cliente.h"
 
 // #### Namespaces ####
@@ -24,7 +22,6 @@ using namespace std;
 void chcp1252();
 int readInt(string ERR_MSG, int m, int n);
 string getClientName();
-string login(tListaUsuarios &db, unsigned short &ind);
 
 // #### main() ####
 int main() {
@@ -34,16 +31,12 @@ int main() {
 	init(db);
 	if (cargar(USER_LIST, db)) cout << "No se ha podido cargar la base de datos." << endl;
 	else {
-		unsigned short ind;
-		string cliente = login(db, ind);
 		tDatosCliente cl;
-		if (init(cl, cliente)) cout << "No se han podido cargar tus chats." << endl;
+		if(login(db, cl)) cout << "No se han podido cargar los chats de " << cl.cliente << "." << endl;
 		else {
-			if (insertar(cl.listaChats, db.l[ind].buzon)) cout << "No se ha podido cargar todo tu buzón. Además lo hemos vaciado." << endl;
-			else {
-				cout << "¡ÉXITO!" << endl;
-			}
+			while (!manejarMenu(menu(cl)));
 		}
+
 	}
 
 	return 0;
@@ -67,25 +60,4 @@ int readInt(string ERR_MSG, int m, int n) {
 	cin.sync();
 
 	return input;
-}
-
-string getClientName() {
-	string user;
-	cout << "Por favor, introduce tu nombre de usuario: ";
-	getline(cin, user);
-	while (user.length() < MIN_USER_LENGTH || user.find(" ") != -1 || user.length() > MAX_USER_LENGTH) {
-		cout << "El nombre de usuario no es válido." << endl;
-		cout << "Nombre de usuario: ";
-		getline(cin, user);
-	}
-	return user;
-}
-
-string login(tListaUsuarios &db, unsigned short &ind) {
-	string client = getClientName();
-	while (!buscar(client, db, ind)) {
-		cout << "El nombre de usuario no está registrado." << endl;
-		client = getClientName();
-	}
-	return client;
 }

@@ -5,6 +5,8 @@
 
 // #### Librerías de sistema ####
 #include <fstream>
+#include <ctime>
+#include <iostream>
 
 // #### UDLs ####
 #include "mensaje.h"
@@ -23,6 +25,12 @@ void init(tMensaje &msg, string emisor, string receptor, tFecha fecha, string te
 	msg.texto = texto;
 }
 
+void mostrar(const tMensaje &msg) {
+	cout << msg.emisor << " <"; 
+	mostrar(msg.fecha);
+	cout << ">: " << msg.texto << endl;
+}
+
 bool cargar(ifstream &file, tMensaje &msg, string nombre, string client) {
 	string emisor; string receptor; tFecha fecha; string texto;
 	file >> emisor; file >> fecha; getline(file, texto);
@@ -33,4 +41,10 @@ bool cargar(ifstream &file, tMensaje &msg, string nombre, string client) {
 	}
 	if (!error) init(msg, emisor, receptor, fecha, texto);
 	return error;
+}
+
+void mostrar(tFecha fecha) {
+	tm* ltm = localtime(&fecha);
+	cout << 1900 + ltm->tm_year << "/" << 1 + ltm->tm_mon << "/" << ltm->tm_mday;
+	cout << ", " << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec;
 }

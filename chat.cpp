@@ -5,6 +5,8 @@
 
 // #### Librerías de sistema ####
 #include <fstream>
+#include <iostream>
+#include <iomanip>
 
 // #### UDLs ####
 #include "chat.h"
@@ -17,8 +19,6 @@
 
 // #### Implementaciones ####
 void init(tChat &ch) {
-	ch.nombre = "";
-	ch.owner = "";
 	init(ch.listaMensajes);
 }
 
@@ -38,4 +38,10 @@ bool cargar(ifstream &file, tChat &ch, string client) {
 	}
 	
 	return error;
+}
+
+void mostrarCabecera(unsigned int i, const tChat &ch) {
+	cout << i << ": " << ch.nombre << endl;
+	cout << setfill(' ') << setw(L_PADDING) << ' ';
+	mostrar(ultimo(ch.listaMensajes));
 }

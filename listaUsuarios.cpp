@@ -52,14 +52,13 @@ bool insertar(tListaUsuarios &db, tDatosUsuario &user) {
 	} else return true;
 }
 
-bool buscar(string user, tListaUsuarios &db, unsigned short &ind) {
-	bool found = false;
+bool buscar(string user, tListaUsuarios &db) {
+	bool found = false; string buff;
 	unsigned short i = 0;
-	while (!found && i < db.counter && db.l[i].usuario <= user) {
-		if (db.l[i].usuario == user) {
-			found = true;
-			ind = i;
-		} else i++;
+	if (i < db.counter) buff = db.l[i].usuario;
+	while (buff <= user && !found && i < db.counter) {
+		if (db.l[i].usuario == user) found = true;
+		i++;
 	}
 	return found;
 }
