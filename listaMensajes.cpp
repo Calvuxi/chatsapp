@@ -31,19 +31,22 @@ bool cargar(ifstream &file, tListaMensajes &lm, string nombre, string client) {
 	while (!error && i < numMensajes) {
 		tMensaje msg;
 		error = cargar(file, msg, nombre, client);
-		if (!error) error = insertar(lm, msg);
+		if (!error) insertar(lm, msg);
 		i++;
 	}
 	return error;
 }
 
-bool insertar(tListaMensajes &lm, tMensaje &msg) {
-	if (lm.counter < MAX_MENSAJES) {
-		lm.l[lm.counter] = msg;
-		lm.counter++;
-		return false;
+void insertar(tListaMensajes &lm, tMensaje &msg) {
+	if (lm.counter >= MAX_MENSAJES) {
+	
+		// Mover los mensajes hacia la izquierda, eliminando el más antiguo.
+		for (unsigned short i = 1; i < lm.counter; i++) lm.l[i - 1] = lm.l[i];
+		lm.counter--;
 	}
-	else return true;
+
+	lm.l[lm.counter] = msg;
+	lm.counter++;
 }
 
 tMensaje ultimo(const tListaMensajes &lm) {

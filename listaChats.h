@@ -27,6 +27,7 @@ void init(tListaChats &lch);
 bool cargar(string filename, tListaChats &lch);
 // guardar una lista de chats en un archivo.
 // buscar un chat por nombre en una lista de chats.
+int buscar(string nombre, const tListaChats &lch);
 // añadir un chat al final de una lista de chats.
 bool insertar(tListaChats &lch, tChat &ch);
 // eliminar un chat (por posición) de una lista de chats.

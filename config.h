@@ -21,7 +21,6 @@ const unsigned short MAX_MENSAJES = 50; // Da una excepción en ejecución si se p
 const unsigned short MAX_CHATS = 50;
 const unsigned short OPT_WORDS = 2;
 
-const unsigned short CONSOLE_WIDTH = 90;
 const unsigned short L_PADDING = 5;
 const unsigned short R_PADDING = 5;
 const unsigned short MIN_WIDTH = 70;

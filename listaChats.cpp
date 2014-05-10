@@ -23,7 +23,7 @@ void init(tListaChats &lch) {
 bool cargar(string filename, tListaChats &lch) {
 	ifstream file;
 	file.open(filename.c_str());
-	if (!file.is_open()) return false;
+	if (!file.is_open()) return true;
 	else {
 		bool error = false; bool end = false;
 
@@ -45,6 +45,19 @@ bool cargar(string filename, tListaChats &lch) {
 
 		return error;
 	}
+}
+
+int buscar(string nombre, const tListaChats &lch) {
+	bool found = false; string buff;
+	int i = 0;
+	if (i < lch.counter) buff = lch.l[i].nombre;
+	
+	// La lista puede estar ordenada por nombre o fecha; se debe recorrer.
+	while (i < lch.counter && !found) {
+		if (lch.l[i].nombre == nombre) found = true;
+		else i++;
+	}
+	return (found ? i : -1);
 }
 
 bool insertar(tListaChats &lch, tChat &ch) {

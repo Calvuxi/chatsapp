@@ -10,6 +10,7 @@
 #include <iomanip>
 
 // #### UDLs ####
+#include "servidor.h"
 #include "cliente.h"
 #include "listaUsuarios.h"
 
@@ -130,13 +131,13 @@ bool login(tListaUsuarios &db, tDatosCliente &cl) {
 	// Obtener el nombre del cliente.
 	//cl.cliente = getClientName();
 	cl.cliente = "pepe";
-	while (!buscar(cl.cliente, db)) {
+	while (buscar(cl.cliente, db) == -1) {
 		cout << "El nombre de usuario no está registrado." << endl;
 		cl.cliente = getClientName();
 	}
 
 	// Obtener la lista de chats del cliente.
-	return cargar(cl.cliente + CHAT_LIST, cl.listaChats);
+	return cargar(cl.cliente + CHAT_LIST, cl.listaChats) || insertar(db, cl);
 }
 
 string getClientName() {
