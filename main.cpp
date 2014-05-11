@@ -34,7 +34,10 @@ int main() {
 		tDatosCliente cl;
 		if(login(db, cl)) cout << "No se han podido cargar los chats de " << cl.cliente << "." << endl;
 		else {
-			while (!manejarMenu(menu(cl)));
+			tOpts opt = menu(cl);
+			while (!manejarMenu(opt, db, cl)) {
+				opt = menu(cl);
+			}
 		}
 
 	}

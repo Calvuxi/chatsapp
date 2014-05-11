@@ -24,7 +24,7 @@ bool insertar(tListaUsuarios &db, tDatosCliente &cl) {
 		for (unsigned short j = 0; j < db.l[i].buzon.counter; j++) {
 			string nombre = db.l[i].buzon.l[j].emisor;
 			k = buscar(nombre, cl.listaChats);
-			if (k == -1) {
+			if (k == -1) { // El chat es nuevo. Crearlo e insertarlo.
 				tChat ch;
 				init(ch);
 				ch.nombre = nombre;

@@ -18,8 +18,15 @@
 // #### Declaraciones typedef ####
 
 // #### Implementaciones ####
-void init(tChat &ch) {
+void init(tChat &ch, string nombre, string owner) {
 	init(ch.listaMensajes);
+	if (nombre != "" && owner != "") {
+		ch.nombre = nombre;
+		ch.owner = owner;
+		tMensaje msg;
+		init(msg, owner, nombre, time(0), INIT_CH_TEXT + owner + ".");
+		insertar(ch.listaMensajes, msg);
+	}
 }
 
 bool cargar(ifstream &file, tChat &ch, string client) {

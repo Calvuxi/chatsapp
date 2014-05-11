@@ -16,7 +16,7 @@ using namespace std;
 // #### Constantes ####
 const unsigned short MAX_USUARIOS = 50;
 const unsigned short MIN_USER_LENGTH = 4;
-const unsigned short MAX_USER_LENGTH = 20;
+const unsigned short MAX_USER_LENGTH = 50;
 const unsigned short MAX_MENSAJES = 50; // Da una excepción en ejecución si se pone a más de 206.
 const unsigned short MAX_CHATS = 50;
 const unsigned short OPT_WORDS = 2;
@@ -45,6 +45,16 @@ const string opt3 = string("Eliminar el chat N: ") + O_ELI + string(" N ") + INT
 const string opt4 = string("Ordenar chats por nombre: ") + O_ORD + ' ' + O_ONOM + ' ' + INTRO;
 const string opt5 = string("Ordenar chats por fecha: ") + O_ORD + ' ' + O_OFEC + ' ' + INTRO;
 const string opt6 = string("Salir: ") + O_SAL + ' ' + INTRO;
+
+const string LOGIN_PROMPT = "Por favor, introduce tu nombre de usuario: ";
+const string INVALID_USERNAME = "El nombre de usuario no es válido.";
+const string LOGIN_ERR = "El nombre de usuario no está registrado.";
+const string NEW_CHAT_PROMPT = "Introduce el nombre de usuario del otro participante: ";
+const string CH_EXISTS = "Ya tienes un chat iniciado con ese usuario.";
+const string CH_WITH_SELF = "No puedes iniciar un chat contigo mismo.";
+const string INIT_CH_TEXT = "Nuevo chat iniciado por ";
+const string TOO_MANY_CHATS = "No se ha podido crear el chat porque tienes demasiados chats.";
+const string NEW_CHAT_SUCCESS = "Se ha creado un chat con ";
 
 const unsigned int N_OPTS = 6;
 const string OPTS[N_OPTS] = { opt1, opt2, opt3, opt4, opt5, opt6 };

@@ -22,6 +22,13 @@ using namespace std;
 // #### Declaraciones typedef ####
 
 // #### Implementaciones ####
+void pause() {
+	cin.clear();
+	cin.sync();
+	cout << "Intro para continuar...";
+	cin.ignore(INT_MAX, '\n');
+}
+
 void init(tDatosCliente &cl) {
 	init(cl.listaChats);
 }
@@ -72,7 +79,7 @@ tOpts parseOpt() {
 	tSplitOpt info;
 	splitString(input, " ", info);
 	tOpts opts;
-	if (info[0] == "n") opts.opt = crear;
+	if (info[0] == "n") opts.opt = crear_ch;
 	else if (info[0] == "s") opts.opt = salir;
 	else if (info[0] == "o" && info[1] == "n") opts.opt = ordenar_n;
 	else if (info[0] == "o" && info[1] == "f") opts.opt = ordenar_f;
@@ -99,15 +106,41 @@ void splitString(string s, string delimiter, tSplitOpt &info) {
 	}
 }
 
-bool manejarMenu(const tOpts &opts) {
+bool manejarMenu(const tOpts &opts, const tListaUsuarios &db, tDatosCliente &cl) {
 	bool exit = false;
 	switch (opts.opt) {
 	case entrar:
 		cout << "ENTRAR" << endl;
 		break;
-	case crear:
-		cout << "CREAR" << endl;
+	case crear_ch:
+	{
+		string nombre;
+		tStatus status = crear(db, cl, nombre);
+		switch (status) {
+		case no_user:
+			cout << LOGIN_ERR << endl;
+			pause();
+			break;
+		case ch_exists:
+			cout << CH_EXISTS << endl;
+			pause();
+			break;
+		case ch_with_self:
+			cout << CH_WITH_SELF << endl;
+			pause();
+			break;
+		case ok:
+		{
+			tChat ch;
+			init(ch, nombre, cl.cliente);
+			if (insertar(cl.listaChats, ch)) cout << TOO_MANY_CHATS << endl;
+			else cout << NEW_CHAT_SUCCESS + nombre + "." << endl;
+			pause();
+			break;
+		}
+		}
 		break;
+	}
 	case eliminar:
 		cout << "ELIMINAR" << endl;
 		break;
@@ -125,27 +158,35 @@ bool manejarMenu(const tOpts &opts) {
 	return exit;
 }
 
+tStatus crear(const tListaUsuarios &db, tDatosCliente &cl, string &nombre) {
+	nombre = getClientName(NEW_CHAT_PROMPT, INVALID_USERNAME);
+	if (buscar(nombre, db) == -1) return no_user;
+	else if (buscar(nombre, cl.listaChats) != -1) return ch_exists;
+	else if (nombre == cl.cliente) return ch_with_self;
+	else return ok;
+}
+
 bool login(tListaUsuarios &db, tDatosCliente &cl) {
 	init(cl);
 
 	// Obtener el nombre del cliente.
-	//cl.cliente = getClientName();
+	//cl.cliente = getClientName(LOGIN_PROMPT, INVALID_USERNAME);
 	cl.cliente = "pepe";
 	while (buscar(cl.cliente, db) == -1) {
-		cout << "El nombre de usuario no está registrado." << endl;
-		cl.cliente = getClientName();
+		cout << LOGIN_ERR << endl;
+		cl.cliente = getClientName(LOGIN_PROMPT, INVALID_USERNAME);
 	}
 
 	// Obtener la lista de chats del cliente.
 	return cargar(cl.cliente + CHAT_LIST, cl.listaChats) || insertar(db, cl);
 }
 
-string getClientName() {
+string getClientName(string prompt, string err_msg) {
 	string user;
-	cout << "Por favor, introduce tu nombre de usuario: ";
+	cout << prompt;
 	getline(cin, user);
 	while (user.length() < MIN_USER_LENGTH || user.find(" ") != -1 || user.length() > MAX_USER_LENGTH) {
-		cout << "El nombre de usuario no es válido." << endl;
+		cout << err_msg << endl;
 		cout << "Nombre de usuario: ";
 		getline(cin, user);
 	}
