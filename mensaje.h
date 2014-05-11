@@ -29,11 +29,13 @@ typedef struct {
 // crear un mensaje nuevo.
 void init(tMensaje &msg, string emisor, string receptor, tFecha fecha, string texto);
 // mostrar un mensaje.
-void mostrar(const tMensaje &msg);
+void mostrar(const tMensaje &msg, bool right = false);
 // cargar un mensaje de un archivo.
 bool cargar(ifstream &file, tMensaje &msg, string nombre, string client);
 // guardar un mensaje de un archivo.
 // mostrar la fecha en formato yyyy/mm/dd, hh:mm:ss (implementada en el guión).
 void mostrar(tFecha fecha);
+// convertir tFecha a string.
+string tFechatoString(tFecha fecha);
 
 #endif

@@ -22,6 +22,7 @@ typedef struct {
 
 // #### Prototipos ####
 // enviar un mensaje.
+void enviar(const tMensaje &msg, tListaMensajes &buzon);
 // obtener el buzón de mensajes de un usuario.
 bool insertar(tListaUsuarios &db, tDatosCliente &cl);
 

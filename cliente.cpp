@@ -86,7 +86,7 @@ tOpts parseOpt() {
 	else {
 		try {
 			opts.num = stoi(info[1]);
-			if (info[0] == "c") opts.opt = entrar;
+			if (info[0] == "c") opts.opt = entrar_ch;
 			else if (info[0] == "e") opts.opt = eliminar_ch;
 			else opts.opt = error;
 		} catch (std::invalid_argument) {
@@ -106,11 +106,14 @@ void splitString(string s, string delimiter, tSplitOpt &info) {
 	}
 }
 
-bool manejarMenu(const tOpts &opts, const tListaUsuarios &db, tDatosCliente &cl) {
+bool manejarMenu(const tOpts &opts, tListaUsuarios &db, tDatosCliente &cl) {
 	bool exit = false;
 	switch (opts.opt) {
-	case entrar:
-		cout << "ENTRAR" << endl;
+	case entrar_ch:
+		if (cl.listaChats.counter <= opts.num || opts.num < 0) {
+			cout << WRONG_INDEX << endl;
+			pause();
+		} else entrar(db.l[buscar(cl.listaChats.l[opts.num].nombre, db)].buzon, cl.listaChats.l[opts.num], cl.cliente);
 		break;
 	case crear_ch:
 	{
@@ -153,7 +156,6 @@ bool manejarMenu(const tOpts &opts, const tListaUsuarios &db, tDatosCliente &cl)
 		ordenarF(cl.listaChats);
 		break;
 	case salir:
-		cout << "SALIR" << endl;
 		exit = true;
 		break;
 	}
@@ -181,6 +183,41 @@ bool login(tListaUsuarios &db, tDatosCliente &cl) {
 
 	// Obtener la lista de chats del cliente.
 	return cargar(cl.cliente + CHAT_LIST, cl.listaChats) || insertar(db, cl);
+}
+
+void entrar(tListaMensajes &buzon, tChat &ch, string cliente) {
+	string input;
+	do {
+		// Obtener anchuras de pantalla y buffer:
+		system("cls");
+		unsigned int width = getBuffer();
+		if (width < MIN_BUFFER) {
+			setBuffer(MIN_BUFFER);
+			width = MIN_BUFFER;
+		}
+		if (getWidth() < MIN_WIDTH) setWidth(MIN_WIDTH);
+
+		// Mostrar título:
+		printLine(width, LINE);
+		center(width, "CHAT CON " + ch.nombre);
+		printLine(width, LINE);
+		cout << endl;
+		printLine(width, U_SC);
+
+		// Mostrar lista de mensajes del chat:
+		mostrar(ch.listaMensajes, cliente);
+
+		cout << endl;
+		printLine(width, LINE);
+		cout << WRITE_PROMPT;
+		getline(cin, input);
+		if (input != opt_exit) {
+			tMensaje msg;
+			init(msg, cliente, ch.nombre, time(0), input);
+			enviar(msg, buzon);
+			insertar(ch.listaMensajes, msg);
+		}
+	} while (input != opt_exit);
 }
 
 string getClientName(string prompt, string err_msg) {

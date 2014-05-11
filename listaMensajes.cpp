@@ -7,6 +7,7 @@
 
 // #### UDLs ####
 #include "listaMensajes.h"
+#include "cliente.h"
 
 // #### Namespaces ####
 
@@ -37,7 +38,7 @@ bool cargar(ifstream &file, tListaMensajes &lm, string nombre, string client) {
 	return error;
 }
 
-void insertar(tListaMensajes &lm, tMensaje &msg) {
+void insertar(tListaMensajes &lm, const tMensaje &msg) {
 	if (lm.counter >= MAX_MENSAJES) {
 	
 		// Mover los mensajes hacia la izquierda, eliminando el más antiguo.
@@ -51,4 +52,12 @@ void insertar(tListaMensajes &lm, tMensaje &msg) {
 
 tMensaje ultimo(const tListaMensajes &lm) {
 	return lm.l[lm.counter - 1];
+}
+
+void mostrar(const tListaMensajes &lm, string cliente) {
+	unsigned int width = getBuffer();
+	for (unsigned short i = 0; i < lm.counter; i++) {
+		mostrar(lm.l[i], lm.l[i].emisor == cliente);
+		printLine(width, U_SC);
+	}
 }

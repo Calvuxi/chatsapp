@@ -15,6 +15,10 @@
 // #### Declaraciones typedef ####
 
 // #### Implementaciones ####
+void enviar(const tMensaje &msg, tListaMensajes &buzon) {
+	insertar(buzon, msg);
+}
+
 bool insertar(tListaUsuarios &db, tDatosCliente &cl) {
 	int i = buscar(cl.cliente, db);
 	if (i == -1) return true;

@@ -21,7 +21,7 @@ typedef struct {
 	tListaChats listaChats;
 } tDatosCliente;
 
-typedef enum tOpt { entrar, crear_ch, eliminar_ch, ordenar_n, ordenar_f, salir, error};
+typedef enum tOpt { entrar_ch, crear_ch, eliminar_ch, ordenar_n, ordenar_f, salir, error};
 typedef enum tStatus { ok, no_user, ch_exists, ch_with_self };
 typedef string tSplitOpt[OPT_WORDS];
 typedef struct {
@@ -42,13 +42,13 @@ tOpts parseOpt();
 // splittear un string por delimitador.
 void splitString(string s, string delimiter, tSplitOpt &info);
 // manejar el menú de usuario.
-bool manejarMenu(const tOpts &opts, const tListaUsuarios &db, tDatosCliente &cl);
+bool manejarMenu(const tOpts &opts, tListaUsuarios &db, tDatosCliente &cl);
 // crear un nuevo chat. **
 tStatus crear(const tListaUsuarios &db, tDatosCliente &cl, string &nombre);
-// eliminar un chat. **
-// ordenar un chat. **
-// entrar.
+// login.
 bool login(tListaUsuarios &db, tDatosCliente &cl);
+// entrar a un chat.
+void entrar(tListaMensajes &buzon, tChat &ch, string cliente);
 // salir.
 // obtener el nombre de un cliente.
 string getClientName(string prompt, string err_msg);
