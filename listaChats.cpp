@@ -47,6 +47,23 @@ bool cargar(string filename, tListaChats &lch) {
 	}
 }
 
+bool guardar(string filename, const tListaChats &lch) {
+	ofstream file;
+	file.open(filename.c_str());
+	if (!file.is_open()) return true;
+	else {
+		bool error = false;
+		unsigned short i = 0;
+		while (i < lch.counter && !error) {
+			error = guardar(file, lch.l[i]);
+			i++;
+		}
+		file << CENTINELA;
+		file.close();
+		return error;
+	}
+}
+
 int buscar(string nombre, const tListaChats &lch) {
 	bool found = false; string buff;
 	int i = 0;
@@ -78,6 +95,12 @@ bool eliminar(tListaChats &lch, int i) {
 
 		return false;
 	}
+}
+
+void mover(tListaChats &lch, unsigned short ind) {
+	tChat ch = lch.l[ind];
+	for (unsigned short i = ind; i < lch.counter - 1; i++) lch.l[i] = lch.l[i + 1];
+	lch.l[lch.counter - 1] = ch;
 }
 
 void ordenarN(tListaChats &lch) {

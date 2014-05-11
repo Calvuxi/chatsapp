@@ -47,7 +47,7 @@ const string opt5 = string("Ordenar chats por fecha: ") + O_ORD + ' ' + O_OFEC +
 const string opt6 = string("Salir: ") + O_SAL + ' ' + INTRO;
 const string opt_exit = "$salir$";
 
-const string LOGIN_PROMPT = "Por favor, introduce tu nombre de usuario: ";
+const string LOGIN_PROMPT = "Introduce tu nombre de usuario <" + opt_exit + " para salir>: ";
 const string INVALID_USERNAME = "El nombre de usuario no es válido.";
 const string LOGIN_ERR = "El nombre de usuario no está registrado.";
 const string NEW_CHAT_PROMPT = "Introduce el nombre de usuario del otro participante: ";

@@ -33,6 +33,7 @@ void mostrar(const tMensaje &msg, bool right = false);
 // cargar un mensaje de un archivo.
 bool cargar(ifstream &file, tMensaje &msg, string nombre, string client);
 // guardar un mensaje de un archivo.
+bool guardar(ofstream &file, const tMensaje &msg);
 // mostrar la fecha en formato yyyy/mm/dd, hh:mm:ss (implementada en el guión).
 void mostrar(tFecha fecha);
 // convertir tFecha a string.

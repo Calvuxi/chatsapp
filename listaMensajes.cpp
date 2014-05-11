@@ -4,6 +4,7 @@
 */
 
 // #### Librerías de sistema ####
+#include <fstream>
 
 // #### UDLs ####
 #include "listaMensajes.h"
@@ -52,6 +53,18 @@ void insertar(tListaMensajes &lm, const tMensaje &msg) {
 
 tMensaje ultimo(const tListaMensajes &lm) {
 	return lm.l[lm.counter - 1];
+}
+
+bool guardar(ofstream &file, const tListaMensajes &lm) {
+	bool error = false;
+	file << lm.counter << endl;
+	error = file.fail();
+	unsigned short i = 0;
+	while (i < lm.counter && !error) {
+		error = guardar(file, lm.l[i]);
+		i++;
+	}
+	return error;
 }
 
 void mostrar(const tListaMensajes &lm, string cliente) {

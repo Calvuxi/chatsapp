@@ -23,7 +23,7 @@ void init(tListaUsuarios &db) {
 bool cargar(string filename, tListaUsuarios &db) {
 	ifstream file;
 	file.open(filename.c_str());
-	if (!file.is_open()) return false;
+	if (!file.is_open()) return true;
 	else {
 		bool error = false; bool end = false;
 		
@@ -40,6 +40,23 @@ bool cargar(string filename, tListaUsuarios &db) {
 		}
 		file.close();
 
+		return error;
+	}
+}
+
+bool guardar(string filename, const tListaUsuarios &db) {
+	ofstream file;
+	file.open(filename.c_str());
+	if (!file.is_open()) return true;
+	else {
+		bool error = false;
+		unsigned short i = 0;
+		while (i < db.counter && !error) {
+			error = guardar(file, db.l[i]);
+			i++;
+		}
+		file << CENTINELA;
+		file.close();
 		return error;
 	}
 }

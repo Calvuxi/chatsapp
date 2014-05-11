@@ -26,6 +26,7 @@ void init(tListaUsuarios &db);
 // cargar una lista de usuarios de un archivo.
 bool cargar(string filename, tListaUsuarios &db);
 // guardar una lista de usuarios en un archivo.
+bool guardar(string filename, const tListaUsuarios &db);
 // buscar en una lista de usuarios.
 int buscar(string user, const tListaUsuarios &db);
 // insertar en una lista de usuarios.

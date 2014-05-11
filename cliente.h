@@ -48,7 +48,7 @@ tStatus crear(const tListaUsuarios &db, tDatosCliente &cl, string &nombre);
 // login.
 bool login(tListaUsuarios &db, tDatosCliente &cl);
 // entrar a un chat.
-void entrar(tListaMensajes &buzon, tChat &ch, string cliente);
+void entrar(tListaMensajes &buzon, tDatosCliente &cl, unsigned short ind);
 // salir.
 // obtener el nombre de un cliente.
 string getClientName(string prompt, string err_msg);

@@ -49,6 +49,21 @@ bool cargar(ifstream &file, tMensaje &msg, string nombre, string client) {
 	return error;
 }
 
+bool guardar(ofstream &file, const tMensaje &msg) {
+	bool error = false;
+	file << msg.emisor << ' ';
+	error = file.fail();
+	if (!error) {
+		file << msg.fecha << ' ';
+		error = file.fail();
+		if (!error) {
+			file << msg.texto << endl;
+			error = file.fail();
+		}
+	}
+	return error;
+}
+
 void mostrar(tFecha fecha) {
 	cout << tFechatoString(fecha);
 }

@@ -1,6 +1,8 @@
 *
 !main.cpp
 
+!*.txt
+
 !chat.cpp
 !datosUsuario.cpp
 !listaUsuarios.cpp

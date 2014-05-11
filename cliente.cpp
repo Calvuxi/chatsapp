@@ -113,7 +113,7 @@ bool manejarMenu(const tOpts &opts, tListaUsuarios &db, tDatosCliente &cl) {
 		if (cl.listaChats.counter <= opts.num || opts.num < 0) {
 			cout << WRONG_INDEX << endl;
 			pause();
-		} else entrar(db.l[buscar(cl.listaChats.l[opts.num].nombre, db)].buzon, cl.listaChats.l[opts.num], cl.cliente);
+		} else entrar(db.l[buscar(cl.listaChats.l[opts.num].nombre, db)].buzon, cl, opts.num);
 		break;
 	case crear_ch:
 	{
@@ -171,21 +171,16 @@ tStatus crear(const tListaUsuarios &db, tDatosCliente &cl, string &nombre) {
 }
 
 bool login(tListaUsuarios &db, tDatosCliente &cl) {
-	init(cl);
-
-	// Obtener el nombre del cliente.
-	//cl.cliente = getClientName(LOGIN_PROMPT, INVALID_USERNAME);
-	cl.cliente = "pepe";
 	while (buscar(cl.cliente, db) == -1) {
 		cout << LOGIN_ERR << endl;
 		cl.cliente = getClientName(LOGIN_PROMPT, INVALID_USERNAME);
 	}
 
-	// Obtener la lista de chats del cliente.
+	// Obtener la lista de chats del cliente e insertar su buzón.
 	return cargar(cl.cliente + CHAT_LIST, cl.listaChats) || insertar(db, cl);
 }
 
-void entrar(tListaMensajes &buzon, tChat &ch, string cliente) {
+void entrar(tListaMensajes &buzon, tDatosCliente &cl, unsigned short ind) {
 	string input;
 	do {
 		// Obtener anchuras de pantalla y buffer:
@@ -199,23 +194,25 @@ void entrar(tListaMensajes &buzon, tChat &ch, string cliente) {
 
 		// Mostrar título:
 		printLine(width, LINE);
-		center(width, "CHAT CON " + ch.nombre);
+		center(width, "CHAT CON " + cl.listaChats.l[ind].nombre);
 		printLine(width, LINE);
 		cout << endl;
 		printLine(width, U_SC);
 
 		// Mostrar lista de mensajes del chat:
-		mostrar(ch.listaMensajes, cliente);
+		mostrar(cl.listaChats.l[ind].listaMensajes, cl.cliente);
 
 		cout << endl;
 		printLine(width, LINE);
 		cout << WRITE_PROMPT;
 		getline(cin, input);
-		if (input != opt_exit) {
+		if (input != opt_exit && input != "") {
 			tMensaje msg;
-			init(msg, cliente, ch.nombre, time(0), input);
+			init(msg, cl.cliente, cl.listaChats.l[ind].nombre, time(0), input);
 			enviar(msg, buzon);
-			insertar(ch.listaMensajes, msg);
+			insertar(cl.listaChats.l[ind].listaMensajes, msg);
+			mover(cl.listaChats, ind);
+			ind = cl.listaChats.counter - 1;
 		}
 	} while (input != opt_exit);
 }
@@ -224,9 +221,9 @@ string getClientName(string prompt, string err_msg) {
 	string user;
 	cout << prompt;
 	getline(cin, user);
-	while (user.length() < MIN_USER_LENGTH || user.find(" ") != -1 || user.length() > MAX_USER_LENGTH) {
+	while (user != opt_exit && (user.length() < MIN_USER_LENGTH || user.find(" ") != -1 || user.length() > MAX_USER_LENGTH)) {
 		cout << err_msg << endl;
-		cout << "Nombre de usuario: ";
+		cout << "Nombre de usuario: <" + opt_exit + " para salir>: ";
 		getline(cin, user);
 	}
 	return user;

@@ -47,6 +47,14 @@ bool cargar(ifstream &file, tChat &ch, string client) {
 	return error;
 }
 
+bool guardar(ofstream &file, const tChat &ch) {
+	bool error = false;
+	file << ch.nombre << endl;
+	error = file.fail();
+	if (!error) error = guardar(file, ch.listaMensajes);
+	return error;
+}
+
 void mostrarCabecera(unsigned int i, const tChat &ch) {
 	cout << i << ": " << ch.nombre << endl;
 	cout << setfill(' ') << setw(L_PADDING) << ' ';

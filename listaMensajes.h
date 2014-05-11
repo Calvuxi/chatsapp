@@ -31,6 +31,7 @@ tMensaje ultimo(const tListaMensajes &lm);
 // cargar una lista de mensajes de un archivo.
 bool cargar(ifstream &file, tListaMensajes &lm, string nombre, string client = "");
 // guardar una lista de mensajes en un archivo.
+bool guardar(ofstream &file, const tListaMensajes &lm);
 // mostrar una lista de mensajes.
 void mostrar(const tListaMensajes &lm, string cliente);
 
