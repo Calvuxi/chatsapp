@@ -53,12 +53,13 @@ bool insertar(tListaUsuarios &db, tDatosUsuario &user) {
 }
 
 int buscar(string user, const tListaUsuarios &db) {
-	bool found = false; string buff;
-	int i = 0;
-	if (i < db.counter) buff = db.l[i].usuario;
-	while (buff <= user && !found && i < db.counter) {
-		if (db.l[i].usuario == user) found = true;
-		else i++;
+	int ini = 0, fin = db.counter - 1, mit;
+	bool found = false;
+	while (!found && ini <= fin) {
+		mit = (ini + fin) / 2;
+		found = (db.l[mit].usuario == user);
+		if (db.l[mit].usuario > user) fin = mit - 1;
+		else ini = mit + 1;
 	}
-	return (found ? i : -1);
+	return (found ? mit : -1);
 }
