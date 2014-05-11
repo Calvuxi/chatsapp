@@ -21,12 +21,12 @@ typedef struct {
 	tListaChats listaChats;
 } tDatosCliente;
 
-typedef enum tOpt { entrar, crear_ch, eliminar, ordenar_n, ordenar_f, salir, error};
+typedef enum tOpt { entrar, crear_ch, eliminar_ch, ordenar_n, ordenar_f, salir, error};
 typedef enum tStatus { ok, no_user, ch_exists, ch_with_self };
 typedef string tSplitOpt[OPT_WORDS];
 typedef struct {
 	tOpt opt;
-	unsigned int num;
+	int num;
 } tOpts;
 
 // #### Prototipos ####

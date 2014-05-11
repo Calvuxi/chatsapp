@@ -87,7 +87,7 @@ tOpts parseOpt() {
 		try {
 			opts.num = stoi(info[1]);
 			if (info[0] == "c") opts.opt = entrar;
-			else if (info[0] == "e") opts.opt = eliminar;
+			else if (info[0] == "e") opts.opt = eliminar_ch;
 			else opts.opt = error;
 		} catch (std::invalid_argument) {
 			opts.opt = error;
@@ -141,8 +141,10 @@ bool manejarMenu(const tOpts &opts, const tListaUsuarios &db, tDatosCliente &cl)
 		}
 		break;
 	}
-	case eliminar:
-		cout << "ELIMINAR" << endl;
+	case eliminar_ch:
+		if (eliminar(cl.listaChats, opts.num)) cout << WRONG_INDEX << endl;
+		else cout << DEL_CHAT_SUCCESS << endl;
+		pause();
 		break;
 	case ordenar_n:
 		cout << "ORDENAR_N" << endl;

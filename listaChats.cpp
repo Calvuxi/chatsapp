@@ -67,3 +67,15 @@ bool insertar(tListaChats &lch, tChat &ch) {
 		return false;
 	} else return true;
 }
+
+bool eliminar(tListaChats &lch, int i) {
+	if (lch.counter <= i || i < 0) return true;
+	else {
+
+		// Mover los chats hacia la izquierda, sobreescribiendo el del índice.
+		for (unsigned short j = i + 1; j < lch.counter; j++) lch.l[j - 1] = lch.l[j];
+		lch.counter--;
+
+		return false;
+	}
+}

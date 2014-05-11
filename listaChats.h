@@ -31,6 +31,7 @@ int buscar(string nombre, const tListaChats &lch);
 // añadir un chat al final de una lista de chats.
 bool insertar(tListaChats &lch, tChat &ch);
 // eliminar un chat (por posición) de una lista de chats.
+bool eliminar(tListaChats &lch, int i);
 // mover un chat (por posición) al final de una lista de chats.
 // ordenar una lista de chats por nombre.
 // ordenar una lista de chats por fecha (de más antiguo a más reciente).

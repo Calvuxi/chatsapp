@@ -55,6 +55,8 @@ const string CH_WITH_SELF = "No puedes iniciar un chat contigo mismo.";
 const string INIT_CH_TEXT = "Nuevo chat iniciado por ";
 const string TOO_MANY_CHATS = "No se ha podido crear el chat porque tienes demasiados chats.";
 const string NEW_CHAT_SUCCESS = "Se ha creado un chat con ";
+const string WRONG_INDEX = "No tienes ningún chat abierto con ese índice.";
+const string DEL_CHAT_SUCCESS = "Se ha eliminado el chat con éxito.";
 
 const unsigned int N_OPTS = 6;
 const string OPTS[N_OPTS] = { opt1, opt2, opt3, opt4, opt5, opt6 };
