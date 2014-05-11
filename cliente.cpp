@@ -147,10 +147,10 @@ bool manejarMenu(const tOpts &opts, const tListaUsuarios &db, tDatosCliente &cl)
 		pause();
 		break;
 	case ordenar_n:
-		cout << "ORDENAR_N" << endl;
+		ordenarN(cl.listaChats);
 		break;
 	case ordenar_f:
-		cout << "ORDENAR_F" << endl;
+		ordenarF(cl.listaChats);
 		break;
 	case salir:
 		cout << "SALIR" << endl;

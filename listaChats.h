@@ -34,6 +34,12 @@ bool insertar(tListaChats &lch, tChat &ch);
 bool eliminar(tListaChats &lch, int i);
 // mover un chat (por posición) al final de una lista de chats.
 // ordenar una lista de chats por nombre.
+void ordenarN(tListaChats &lch);
 // ordenar una lista de chats por fecha (de más antiguo a más reciente).
+void ordenarF(tListaChats &lch);
+// obtener el índice del chat más antiguo en lch[i..j-1] (inclusive).
+unsigned short getMin(tListaChats &lch, unsigned short i, unsigned short j);
+// intercambiar lch[i] y lch[j].
+void swap(tListaChats &lch, unsigned short i, unsigned short j);
 
 #endif

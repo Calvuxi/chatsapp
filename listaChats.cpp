@@ -79,3 +79,47 @@ bool eliminar(tListaChats &lch, int i) {
 		return false;
 	}
 }
+
+void ordenarN(tListaChats &lch) {
+	for (unsigned short i = 1; i < lch.counter; i++) {
+		tChat elem = lch.l[i];
+		unsigned short pos = i - 1;
+		bool found = lch.l[pos].nombre <= elem.nombre;
+		while (pos > 0 && !found) {
+			lch.l[pos + 1] = lch.l[pos];
+			pos--;
+			found = lch.l[pos].nombre <= elem.nombre;
+		}
+		if (found) lch.l[pos + 1] = elem;
+		else {
+			lch.l[1] = lch.l[0];
+			lch.l[0] = elem;
+		}
+	}
+}
+
+void ordenarF(tListaChats &lch) {
+	for (unsigned short i = 0; i < lch.counter - 1; i++) {
+		unsigned short j = getMin(lch, i + 1, lch.counter);
+		if (j > i) swap(lch, i, j);
+	}
+}
+
+unsigned short getMin(tListaChats &lch, unsigned short i, unsigned short j) {
+	unsigned short k = i;
+	time_t elem = ultimo(lch.l[k].listaMensajes).fecha;
+	while (i < j) {
+		if (ultimo(lch.l[i].listaMensajes).fecha < elem) {
+			k = i;
+			elem = ultimo(lch.l[k].listaMensajes).fecha;
+		}
+		i++;
+	}
+	return k;
+}
+
+void swap(tListaChats &lch, unsigned short i, unsigned short j) {
+	tChat tmp = lch.l[j];
+	lch.l[j] = lch.l[i];
+	lch.l[i] = tmp;
+}
