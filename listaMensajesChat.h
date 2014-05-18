@@ -26,7 +26,7 @@ typedef struct {
 // inicializar lista de mensajes.
 bool init(tListaMensajesChat &lmch, unsigned short numMensajes = 0);
 // añadir un mensaje al final.
-void insertar(tListaMensajesChat &lmch, const tMensaje &msg);
+bool insertar(tListaMensajesChat &lmch, tMensaje &msg);
 // consultar el último elemento.
 tMensaje ultimo(const tListaMensajesChat &lmch);
 // cargar una lista de mensajes de un archivo.
@@ -36,6 +36,8 @@ bool guardar(ofstream &file, const tListaMensajesChat &lmch);
 // mostrar una lista de mensajes.
 void mostrar(const tListaMensajesChat &lmch, string cliente);
 // obtener el índice del elemento siguiente.
-unsigned short next(const tListaMensajesChat &lmch, unsigned short i);
+unsigned short next(unsigned short i);
+// mover un mensaje al histórico.
+bool mover(const tMensaje &msg, string cliente, string nombre);
 
 #endif

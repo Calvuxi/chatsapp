@@ -17,7 +17,7 @@ using namespace std;
 const unsigned short MAX_USUARIOS = 20;
 const unsigned short MIN_USER_LENGTH = 4;
 const unsigned short MAX_USER_LENGTH = 50;
-const unsigned short MAX_MENSAJES = 75; // Da una excepción en ejecución si se pone a más de 206.
+const unsigned short MAX_MENSAJES = 5; // Da una excepción en ejecución si se pone a más de 206.
 const unsigned short MAX_CHATS = 15;
 const unsigned short OPT_WORDS = 2;
 
@@ -29,6 +29,7 @@ const unsigned short MIN_BUFFER = 80;
 const string CENTINELA = "XXX";
 const string USER_LIST = "usuarios.txt";
 const string CHAT_LIST = "_chats.txt";
+const string HISTORICO = "_historico_";
 
 const char O_ENT = 'c';
 const char O_ORD = 'o';

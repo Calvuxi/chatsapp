@@ -39,9 +39,14 @@ bool cargar(ifstream &file, tListaMensajes &lm, string nombre, string client) {
 	return error;
 }
 
-void insertar(tListaMensajes &lm, const tMensaje &msg) {
+bool insertar(tListaMensajes &lm, tMensaje &msg) {
+	bool changes = false;
+	tMensaje oldmsg = msg;
 	if (lm.counter >= MAX_MENSAJES) {
-	
+		changes = true;
+
+		oldmsg = lm.l[0]; // Mensaje a guardar en el histórico.
+
 		// Mover los mensajes hacia la izquierda, eliminando el más antiguo.
 		for (unsigned short i = 1; i < lm.counter; i++) lm.l[i - 1] = lm.l[i];
 		lm.counter--;
@@ -49,6 +54,9 @@ void insertar(tListaMensajes &lm, const tMensaje &msg) {
 
 	lm.l[lm.counter] = msg;
 	lm.counter++;
+	msg = oldmsg;
+
+	return changes;
 }
 
 tMensaje ultimo(const tListaMensajes &lm) {

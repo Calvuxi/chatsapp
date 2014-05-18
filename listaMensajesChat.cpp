@@ -17,10 +17,11 @@
 // #### Declaraciones typedef ####
 
 // #### Implementaciones ####
+
 bool init(tListaMensajesChat &lmch, unsigned short numMensajes) {
 	if (numMensajes <= MAX_MENSAJES) {
 		lmch.ini = 0;
-		lmch.fin = numMensajes - 1; // Representa la última posición ocupada.
+		lmch.fin = (numMensajes == 0 ? numMensajes : numMensajes - 1); // Representa la última posición ocupada.
 		return false;
 	}
 	else return true;
@@ -41,13 +42,19 @@ bool cargar(ifstream &file, tListaMensajesChat &lmch, string nombre, string clie
 	return error;
 }
 
-void insertar(tListaMensajesChat &lmch, const tMensaje &msg) {
-	if (next(lmch.fin) == lmch.ini) { // Está lleno.
-		tMensaje oldmsg = lmch.l[lmch.ini]; // Mensaje a guardar en el histórico.
-		lmch.ini = next(lmch.ini);
-		lmch.fin = next(lmch.fin);
+bool insertar(tListaMensajesChat &lmch, tMensaje &msg) {
+	bool full = false;
+	tMensaje oldmsg = msg;
+	if (::next(lmch.fin) == lmch.ini) { // Está lleno.
+		full = true;
+		oldmsg = lmch.l[lmch.ini]; // Mensaje a guardar en el histórico.
+		lmch.ini = ::next(lmch.ini);
+		lmch.fin = ::next(lmch.fin);
 	}
+	if (!full) lmch.fin++;
 	lmch.l[lmch.fin] = msg;
+	msg = oldmsg;
+	return full;
 }
 
 tMensaje ultimo(const tListaMensajesChat &lmch) {
@@ -56,12 +63,12 @@ tMensaje ultimo(const tListaMensajesChat &lmch) {
 
 bool guardar(ofstream &file, const tListaMensajesChat &lmch) {
 	bool error = false;
-	file << (next(lmch.fin) == lmch.ini ? MAX_MENSAJES : lmch.fin + 1) << endl;
+	file << (::next(lmch.fin) == lmch.ini ? MAX_MENSAJES : lmch.fin + 1) << endl;
 	error = file.fail();
 	unsigned short i = lmch.ini;
 	while (i != lmch.fin) {
 		error = guardar(file, lmch.l[i]);
-		i = next(lmch, i);
+		i = ::next(i);
 	}
 	if (lmch.ini != lmch.fin) error = guardar(file, lmch.l[i]); // Si no está vacío.
 	return error;
@@ -73,14 +80,26 @@ void mostrar(const tListaMensajesChat &lmch, string cliente) {
 	while (i != lmch.fin) {
 		mostrar(lmch.l[i], lmch.l[i].emisor == cliente);
 		printLine(width, U_SC);
-		i = next(lmch, i);
+		i = ::next(i);
 	}
-	if (lmch.ini != lmch.fin) { // Si no está vacío.
-		mostrar(lmch.l[i], lmch.l[i].emisor == cliente);
-		printLine(width, U_SC);
-	}
+	// Una tListaMensajesChat nunca está vacía.
+	mostrar(lmch.l[i], lmch.l[i].emisor == cliente);
+	printLine(width, U_SC);
+	
 }
 
-unsigned short next(const tListaMensajesChat &lmch, unsigned short i) {
+unsigned short next(unsigned short i) {
 	return (i + 1) % MAX_MENSAJES;
+}
+
+bool mover(const tMensaje &msg, string cliente, string nombre) {
+	ofstream file;
+	file.open((cliente + HISTORICO + nombre + ".txt").c_str(), ios::app);
+	if (!file.is_open()) return true;
+	else {
+		bool error = guardar(file, msg);
+		file.close();
+
+		return error;
+	}
 }

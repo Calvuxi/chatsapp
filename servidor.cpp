@@ -15,8 +15,8 @@
 // #### Declaraciones typedef ####
 
 // #### Implementaciones ####
-void enviar(const tMensaje &msg, tListaMensajes &buzon) {
-	insertar(buzon, msg);
+bool enviar(tMensaje &msg, tListaMensajes &buzon) {
+	return insertar(buzon, msg);
 }
 
 bool insertar(tListaUsuarios &db, tDatosCliente &cl) {

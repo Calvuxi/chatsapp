@@ -214,8 +214,17 @@ void entrar(tListaMensajes &buzon, tDatosCliente &cl, unsigned short ind) {
 		if (input != opt_exit && input != "") {
 			tMensaje msg;
 			init(msg, cl.cliente, cl.listaChats.l[ind].nombre, time(0), input);
-			enviar(msg, buzon);
-			insertar(cl.listaChats.l[ind].listaMensajes, msg);
+			tMensaje msg_copy = msg; // Se hace una copia por si se actualiza el histórico del receptor.
+			if (enviar(msg, buzon)) { // Actualizar histórico.
+
+				// Se intercambia nombre y cliente en la llamada porque se va actualizar el histórico del receptor.
+				mover(msg, cl.listaChats.l[ind].nombre, cl.cliente);
+				// Si no se pudo abrir el histórico, el mensaje más antiguo del buzón del receptor se pierde.
+			}
+			if (insertar(cl.listaChats.l[ind].listaMensajes, msg_copy)) { // Actualizar histórico.
+				mover(msg_copy, cl.cliente, cl.listaChats.l[ind].nombre);
+				// Si no se pudo abrir el histórico, el mensaje más antiguo se pierde.
+			}
 			mover(cl.listaChats, ind);
 			ind = cl.listaChats.counter - 1;
 		}

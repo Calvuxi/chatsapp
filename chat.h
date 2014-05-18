@@ -8,7 +8,7 @@
 // #### Librerías de sistema ####
 
 // #### UDLs ####
-#include "listaMensajes.h"
+#include "listaMensajesChat.h"
 
 // #### Namespaces ####
 
@@ -18,7 +18,7 @@
 typedef struct {
 	string nombre; // identificador del usuario con el que se habla.
 	string owner; // identificador del usuario que inició el chat.
-	tListaMensajes listaMensajes;
+	tListaMensajesChat listaMensajes;
 } tChat;
 
 // #### Prototipos ####
