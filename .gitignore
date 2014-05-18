@@ -11,6 +11,7 @@
 !mensaje.cpp
 !servidor.cpp
 !cliente.cpp
+!listaMensajesChat.cpp
 
 !config.h
 !chat.h
@@ -21,5 +22,6 @@
 !mensaje.h
 !servidor.h
 !cliente.h
+!listaMensajesChat.h
 
 !.gitignore
