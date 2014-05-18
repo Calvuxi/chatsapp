@@ -20,8 +20,6 @@ using namespace std;
 
 // #### Prototipos ####
 void chcp1252();
-int readInt(string ERR_MSG, int m, int n);
-string getClientName();
 
 // #### main() ####
 int main() {
@@ -61,17 +59,4 @@ int main() {
 void chcp1252() {
 	system("chcp 1252");
 	system("cls");
-}
-
-int readInt(string ERR_MSG, int m, int n) {
-	int input;
-	cin >> input;
-	while (cin.fail() || input < m || input > n) {
-		cin.clear(); cin.sync();
-		cout << ERR_MSG;
-		cin >> input;
-	}
-	cin.sync();
-
-	return input;
 }

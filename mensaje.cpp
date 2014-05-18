@@ -71,7 +71,17 @@ void mostrar(tFecha fecha) {
 string tFechatoString(tFecha fecha) {
 	string text;
 	tm* ltm = localtime(&fecha);
-	text = to_string(1900 + ltm->tm_year) + "/" + to_string(1 + ltm->tm_mon) + "/" + to_string(ltm->tm_mday);
-	text += ", " + to_string(ltm->tm_hour) + ":" + to_string(ltm->tm_min) + ":" + to_string(ltm->tm_sec);
+	text = to_string(1900 + ltm->tm_year) + "/";
+	if (to_string(ltm->tm_mon).length() == 1) text += '0';
+	text += to_string(1 + ltm->tm_mon) + "/";
+	if (to_string(ltm->tm_mday).length() == 1) text += '0';
+	text += to_string(ltm->tm_mday);
+	text += ", ";
+	if (to_string(ltm->tm_hour).length() == 1) text += '0';
+	text += to_string(ltm->tm_hour) + ":";
+	if (to_string(ltm->tm_min).length() == 1) text += '0';
+	text += to_string(ltm->tm_min) + ":";
+	if (to_string(ltm->tm_sec).length() == 1) text += '0';
+	text +=	to_string(ltm->tm_sec);
 	return text;
 }

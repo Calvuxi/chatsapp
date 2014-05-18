@@ -34,7 +34,6 @@ typedef struct {
 void pause();
 // inicializar los datos del cliente.
 void init(tDatosCliente &cl);
-// colocar los mensajes del buzón del servidor en los chats correspondientes.
 // mostrar el menú de usuario.
 tOpts menu(const tDatosCliente &cl);
 // parsear la entrada del usuario.
@@ -49,7 +48,6 @@ tStatus crear(const tListaUsuarios &db, tDatosCliente &cl, string &nombre);
 bool login(tListaUsuarios &db, tDatosCliente &cl);
 // entrar a un chat.
 void entrar(tListaMensajes &buzon, tDatosCliente &cl, unsigned short ind);
-// salir.
 // obtener el nombre de un cliente.
 string getClientName(string prompt, string err_msg);
 // obtener la anchura de la consola.
@@ -68,7 +66,5 @@ void center(unsigned int width, string txt);
 void printOpts(unsigned int width);
 // imprimir texto a dos columnas.
 void printTwoCols(unsigned int width, string str1, string str2);
-
-// ** = funciones carcasa.
 
 #endif

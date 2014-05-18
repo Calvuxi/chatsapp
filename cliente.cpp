@@ -137,7 +137,10 @@ bool manejarMenu(const tOpts &opts, tListaUsuarios &db, tDatosCliente &cl) {
 			tChat ch;
 			init(ch, nombre, cl.cliente);
 			if (insertar(cl.listaChats, ch)) cout << TOO_MANY_CHATS << endl;
-			else cout << NEW_CHAT_SUCCESS + nombre + "." << endl;
+			else {
+				enviar(cl.listaChats.l[cl.listaChats.counter - 1].listaMensajes.l[0], db.l[buscar(nombre, db)].buzon);
+				cout << NEW_CHAT_SUCCESS + nombre + "." << endl;
+			}
 			pause();
 			break;
 		}
@@ -177,7 +180,9 @@ bool login(tListaUsuarios &db, tDatosCliente &cl) {
 	}
 
 	// Obtener la lista de chats del cliente e insertar su buzón.
-	return cargar(cl.cliente + CHAT_LIST, cl.listaChats) || insertar(db, cl);
+	bool error = cargar(cl.cliente + CHAT_LIST, cl.listaChats) || insertar(db, cl);
+	if (!error) ordenarF(cl.listaChats);
+	return error;
 }
 
 void entrar(tListaMensajes &buzon, tDatosCliente &cl, unsigned short ind) {

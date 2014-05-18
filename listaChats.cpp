@@ -122,8 +122,9 @@ void ordenarN(tListaChats &lch) {
 }
 
 void ordenarF(tListaChats &lch) {
+	unsigned short j;
 	for (unsigned short i = 0; i < lch.counter - 1; i++) {
-		unsigned short j = getMin(lch, i + 1, lch.counter);
+		j = getMin(lch, i, lch.counter);
 		if (j > i) swap(lch, i, j);
 	}
 }
