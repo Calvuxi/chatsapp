@@ -42,12 +42,18 @@ tOpts parseOpt();
 void splitString(string s, string delimiter, tSplitOpt &info);
 // manejar el menú de usuario.
 bool manejarMenu(const tOpts &opts, tListaUsuarios &db, tDatosCliente &cl);
+// eliminar el histórico de un chat.
+bool eliminar(string cliente, tListaChats &lch, int i);
 // crear un nuevo chat. **
 tStatus crear(const tListaUsuarios &db, tDatosCliente &cl, string &nombre);
 // login.
 bool login(tListaUsuarios &db, tDatosCliente &cl);
 // entrar a un chat.
 void entrar(tListaMensajes &buzon, tDatosCliente &cl, unsigned short ind);
+// parsear y resolver el input en una sala de chat.
+bool manageInput(string input, tListaMensajes &buzon, tDatosCliente &cl, unsigned short ind);
+// imprimir el histórico de un chat.
+string historico(tDatosCliente &cl, unsigned short ind);
 // obtener el nombre de un cliente.
 string getClientName(string prompt, string err_msg);
 // obtener la anchura de la consola.

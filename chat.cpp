@@ -18,13 +18,13 @@
 // #### Declaraciones typedef ####
 
 // #### Implementaciones ####
-void init(tChat &ch, string nombre, string owner) {
+void init(tChat &ch, string nombre, string owner, tFecha fecha) {
 	init(ch.listaMensajes);
 	if (nombre != "" && owner != "") {
 		ch.nombre = nombre;
 		ch.owner = owner;
 		tMensaje msg;
-		init(msg, owner, nombre, time(0), INIT_CH_TEXT + owner + ".");
+		init(msg, owner, nombre, fecha, INIT_CH_TEXT + owner + ".");
 
 		// La lista sólo tiene un mensaje, por lo que ini y fin deben estar a cero.
 		// Es el único caso en el que insertar un mensaje no aumenta el contador.

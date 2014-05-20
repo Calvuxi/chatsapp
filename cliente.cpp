@@ -8,6 +8,7 @@
 #include <iostream>
 #include <windows.h>
 #include <iomanip>
+#include <fstream>
 
 // #### UDLs ####
 #include "servidor.h"
@@ -149,6 +150,7 @@ bool manejarMenu(const tOpts &opts, tListaUsuarios &db, tDatosCliente &cl) {
 	}
 	case eliminar_ch:
 		if (eliminar(cl.listaChats, opts.num)) cout << WRONG_INDEX << endl;
+		else if (eliminar(cl.cliente, cl.listaChats, opts.num)) cout << DEL_CHAT_FAILURE << endl;
 		else cout << DEL_CHAT_SUCCESS << endl;
 		pause();
 		break;
@@ -163,6 +165,13 @@ bool manejarMenu(const tOpts &opts, tListaUsuarios &db, tDatosCliente &cl) {
 		break;
 	}
 	return exit;
+}
+
+bool eliminar(string cliente, tListaChats &lch, int i) {
+	ofstream file;
+	file.open(cliente + HISTORICO + lch.l[i].nombre + ".txt", ofstream::trunc);
+	if (!file.is_open()) return true;
+	else return false;
 }
 
 tStatus crear(const tListaUsuarios &db, tDatosCliente &cl, string &nombre) {
@@ -211,24 +220,79 @@ void entrar(tListaMensajes &buzon, tDatosCliente &cl, unsigned short ind) {
 		printLine(width, LINE);
 		cout << WRITE_PROMPT;
 		getline(cin, input);
-		if (input != opt_exit && input != "") {
-			tMensaje msg;
-			init(msg, cl.cliente, cl.listaChats.l[ind].nombre, time(0), input);
-			tMensaje msg_copy = msg; // Se hace una copia por si se actualiza el histórico del receptor.
-			if (enviar(msg, buzon)) { // Actualizar histórico.
-
-				// Se intercambia nombre y cliente en la llamada porque se va actualizar el histórico del receptor.
-				mover(msg, cl.listaChats.l[ind].nombre, cl.cliente);
-				// Si no se pudo abrir el histórico, el mensaje más antiguo del buzón del receptor se pierde.
+		if (manageInput(input, buzon, cl, ind)) {
+			if (input == opt_historico) {
+				input = historico(cl, ind);
+				manageInput(input, buzon, cl, ind);
 			}
-			if (insertar(cl.listaChats.l[ind].listaMensajes, msg_copy)) { // Actualizar histórico.
-				mover(msg_copy, cl.cliente, cl.listaChats.l[ind].nombre);
-				// Si no se pudo abrir el histórico, el mensaje más antiguo se pierde.
-			}
-			mover(cl.listaChats, ind);
-			ind = cl.listaChats.counter - 1;
 		}
 	} while (input != opt_exit);
+}
+
+bool manageInput(string input, tListaMensajes &buzon, tDatosCliente &cl, unsigned short ind) {
+	if (input != opt_exit && input != "" && input != opt_historico) {
+		tMensaje msg;
+		init(msg, cl.cliente, cl.listaChats.l[ind].nombre, time(0), input);
+		tMensaje msg_copy = msg; // Se hace una copia por si enviar modifica msg (no cabe en el buzón).
+		if (enviar(msg, buzon)) {
+			cout << FULL_BUZON << endl;
+			pause();
+		} else if (insertar(cl.listaChats.l[ind].listaMensajes, msg_copy)) { // Actualizar histórico.
+			mover(msg_copy, cl.cliente, cl.listaChats.l[ind].nombre);
+			// Si no se pudo abrir el histórico, el mensaje más antiguo se pierde.
+		}
+		mover(cl.listaChats, ind);
+		ind = cl.listaChats.counter - 1;
+		return false;
+	} else return true;
+}
+
+string historico(tDatosCliente &cl, unsigned short ind) {
+	// Obtener anchuras de pantalla y buffer:
+	system("cls");
+	unsigned int width = getBuffer();
+	if (width < MIN_BUFFER) {
+		setBuffer(MIN_BUFFER);
+		width = MIN_BUFFER;
+	}
+	if (getWidth() < MIN_WIDTH) setWidth(MIN_WIDTH);
+
+	// Mostrar título:
+	printLine(width, LINE);
+	center(width, "CHAT CON " + cl.listaChats.l[ind].nombre);
+	printLine(width, LINE);
+	cout << endl;
+	printLine(width, U_SC);
+
+	// Mostrar mensajes del histórico:
+	ifstream file;
+	file.open(cl.cliente + HISTORICO + cl.listaChats.l[ind].nombre + ".txt");
+	if (!file.is_open()) {
+		cout << HISTORICO_ERROR << endl;
+		pause();
+	} else {
+		tMensaje msg;
+		bool error = file.fail();
+		while (!error) {
+			error = cargar(file, msg, cl.listaChats.l[ind].nombre, cl.cliente);
+			if (!error) {
+				mostrar(msg, msg.emisor == cl.cliente);
+				printLine(width, U_SC);
+			}
+		}
+	}
+
+	// Mostrar lista de mensajes del chat:
+	mostrar(cl.listaChats.l[ind].listaMensajes, cl.cliente);
+
+	cout << endl;
+	printLine(width, LINE);
+	cout << SH_WRITE_PROMPT;
+	
+	string input;
+	getline(cin, input);
+
+	return input;
 }
 
 string getClientName(string prompt, string err_msg) {

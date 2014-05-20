@@ -47,6 +47,7 @@ const string opt4 = string("Ordenar chats por nombre: ") + O_ORD + ' ' + O_ONOM 
 const string opt5 = string("Ordenar chats por fecha: ") + O_ORD + ' ' + O_OFEC + ' ' + INTRO;
 const string opt6 = string("Salir: ") + O_SAL + ' ' + INTRO;
 const string opt_exit = "$salir$";
+const string opt_historico = "$todos$";
 
 const string LOGIN_PROMPT = "Introduce tu nombre de usuario <" + opt_exit + " para salir>: ";
 const string INVALID_USERNAME = "El nombre de usuario no es válido.";
@@ -59,7 +60,11 @@ const string TOO_MANY_CHATS = "No se ha podido crear el chat porque tienes demas
 const string NEW_CHAT_SUCCESS = "Se ha creado un chat con ";
 const string WRONG_INDEX = "No tienes ningún chat abierto con ese índice.";
 const string DEL_CHAT_SUCCESS = "Se ha eliminado el chat con éxito.";
-const string WRITE_PROMPT = "Escribe aquí <" + opt_exit + " para salir>: ";
+const string WRITE_PROMPT = "Escribe aquí <" + opt_exit + " para salir, " + opt_historico + " para ver todos los mensajes>: ";
+const string SH_WRITE_PROMPT = "Escribe aquí <" + opt_exit + " para salir>: ";
+const string FULL_BUZON = "No se ha podido enviar tu mensaje porque has llenado el buzón del otro participante.";
+const string HISTORICO_ERROR = "Se ha producido un error abriendo el resto de los mensajes de este chat.";
+const string DEL_CHAT_FAILURE = "No se ha podido eliminar el histórico de mensajes del chat.";
 
 const unsigned int N_OPTS = 6;
 const string OPTS[N_OPTS] = { opt1, opt2, opt3, opt4, opt5, opt6 };
