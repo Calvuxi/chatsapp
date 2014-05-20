@@ -23,7 +23,7 @@ void init(tListaUsuarios &db) {
 bool cargar(string filename, tListaUsuarios &db) {
 	ifstream file;
 	file.open(filename.c_str());
-	if (!file.is_open()) return false;
+	if (!file.is_open()) return true;
 	else {
 		bool error = false; bool end = false;
 		
@@ -44,6 +44,23 @@ bool cargar(string filename, tListaUsuarios &db) {
 	}
 }
 
+bool guardar(string filename, const tListaUsuarios &db) {
+	ofstream file;
+	file.open(filename.c_str());
+	if (!file.is_open()) return true;
+	else {
+		bool error = false;
+		unsigned short i = 0;
+		while (i < db.counter && !error) {
+			error = guardar(file, db.l[i]);
+			i++;
+		}
+		file << CENTINELA;
+		file.close();
+		return error;
+	}
+}
+
 bool insertar(tListaUsuarios &db, tDatosUsuario &user) {
 	if (db.counter < MAX_USUARIOS) {
 		db.l[db.counter] = user;
@@ -52,13 +69,14 @@ bool insertar(tListaUsuarios &db, tDatosUsuario &user) {
 	} else return true;
 }
 
-bool buscar(string user, tListaUsuarios &db) {
-	bool found = false; string buff;
-	unsigned short i = 0;
-	if (i < db.counter) buff = db.l[i].usuario;
-	while (buff <= user && !found && i < db.counter) {
-		if (db.l[i].usuario == user) found = true;
-		i++;
+int buscar(string user, const tListaUsuarios &db) {
+	int ini = 0, fin = db.counter - 1, mit;
+	bool found = false;
+	while (!found && ini <= fin) {
+		mit = (ini + fin) / 2;
+		found = (db.l[mit].usuario == user);
+		if (db.l[mit].usuario > user) fin = mit - 1;
+		else ini = mit + 1;
 	}
-	return found;
+	return (found ? mit : -1);
 }

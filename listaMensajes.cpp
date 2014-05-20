@@ -4,9 +4,11 @@
 */
 
 // #### Librerías de sistema ####
+#include <fstream>
 
 // #### UDLs ####
 #include "listaMensajes.h"
+#include "cliente.h"
 
 // #### Namespaces ####
 
@@ -31,21 +33,44 @@ bool cargar(ifstream &file, tListaMensajes &lm, string nombre, string client) {
 	while (!error && i < numMensajes) {
 		tMensaje msg;
 		error = cargar(file, msg, nombre, client);
-		if (!error) error = insertar(lm, msg);
+		if (!error) insertar(lm, msg);
 		i++;
 	}
 	return error;
 }
 
-bool insertar(tListaMensajes &lm, tMensaje &msg) {
-	if (lm.counter < MAX_MENSAJES) {
-		lm.l[lm.counter] = msg;
-		lm.counter++;
-		return false;
+void insertar(tListaMensajes &lm, const tMensaje &msg) {
+	if (lm.counter >= MAX_MENSAJES) {
+	
+		// Mover los mensajes hacia la izquierda, eliminando el más antiguo.
+		for (unsigned short i = 1; i < lm.counter; i++) lm.l[i - 1] = lm.l[i];
+		lm.counter--;
 	}
-	else return true;
+
+	lm.l[lm.counter] = msg;
+	lm.counter++;
 }
 
 tMensaje ultimo(const tListaMensajes &lm) {
 	return lm.l[lm.counter - 1];
+}
+
+bool guardar(ofstream &file, const tListaMensajes &lm) {
+	bool error = false;
+	file << lm.counter << endl;
+	error = file.fail();
+	unsigned short i = 0;
+	while (i < lm.counter && !error) {
+		error = guardar(file, lm.l[i]);
+		i++;
+	}
+	return error;
+}
+
+void mostrar(const tListaMensajes &lm, string cliente) {
+	unsigned int width = getBuffer();
+	for (unsigned short i = 0; i < lm.counter; i++) {
+		mostrar(lm.l[i], lm.l[i].emisor == cliente);
+		printLine(width, U_SC);
+	}
 }

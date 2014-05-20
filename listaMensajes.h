@@ -25,11 +25,14 @@ typedef struct {
 // inicializar lista de mensajes.
 bool init(tListaMensajes &lm, unsigned short numMensajes = 0);
 // añadir un mensaje al final.
-bool insertar(tListaMensajes &lm, tMensaje &msg);
+void insertar(tListaMensajes &lm, const tMensaje &msg);
 // consultar el último elemento.
 tMensaje ultimo(const tListaMensajes &lm);
 // cargar una lista de mensajes de un archivo.
 bool cargar(ifstream &file, tListaMensajes &lm, string nombre, string client = "");
 // guardar una lista de mensajes en un archivo.
+bool guardar(ofstream &file, const tListaMensajes &lm);
+// mostrar una lista de mensajes.
+void mostrar(const tListaMensajes &lm, string cliente);
 
 #endif

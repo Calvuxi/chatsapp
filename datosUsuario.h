@@ -28,5 +28,6 @@ void init(tDatosUsuario &du);
 // cargar un usuario de un archivo.
 bool cargar(ifstream &file, tDatosUsuario &du);
 // guardar un usuario en un archivo.
+bool guardar(ofstream &file, const tDatosUsuario &du);
 
 #endif

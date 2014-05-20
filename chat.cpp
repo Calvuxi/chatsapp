@@ -18,8 +18,15 @@
 // #### Declaraciones typedef ####
 
 // #### Implementaciones ####
-void init(tChat &ch) {
+void init(tChat &ch, string nombre, string owner) {
 	init(ch.listaMensajes);
+	if (nombre != "" && owner != "") {
+		ch.nombre = nombre;
+		ch.owner = owner;
+		tMensaje msg;
+		init(msg, owner, nombre, time(0), INIT_CH_TEXT + owner + ".");
+		insertar(ch.listaMensajes, msg);
+	}
 }
 
 bool cargar(ifstream &file, tChat &ch, string client) {
@@ -37,6 +44,14 @@ bool cargar(ifstream &file, tChat &ch, string client) {
 		ch.owner = ch.listaMensajes.l[0].emisor; // El primer mensaje de un chat siempre existe.
 	}
 	
+	return error;
+}
+
+bool guardar(ofstream &file, const tChat &ch) {
+	bool error = false;
+	file << ch.nombre << endl;
+	error = file.fail();
+	if (!error) error = guardar(file, ch.listaMensajes);
 	return error;
 }
 

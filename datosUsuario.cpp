@@ -37,3 +37,11 @@ bool cargar(ifstream &file, tDatosUsuario &du) {
 
 	return error;
 }
+
+bool guardar(ofstream &file, const tDatosUsuario &du) {
+	bool error = false;
+	file << du.usuario << endl;
+	error = file.fail();
+	if (!error) error = guardar(file, du.buzon);
+	return error;
+}
