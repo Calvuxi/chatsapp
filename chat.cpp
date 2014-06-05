@@ -18,14 +18,18 @@
 // #### Declaraciones typedef ####
 
 // #### Implementaciones ####
-void init(tChat &ch, string nombre, string owner) {
+void init(tChat &ch, string nombre, string owner, tFecha fecha) {
 	init(ch.listaMensajes);
 	if (nombre != "" && owner != "") {
 		ch.nombre = nombre;
 		ch.owner = owner;
 		tMensaje msg;
-		init(msg, owner, nombre, time(0), INIT_CH_TEXT + owner + ".");
-		insertar(ch.listaMensajes, msg);
+		init(msg, owner, nombre, fecha, INIT_CH_TEXT + owner + ".");
+
+		// La lista sólo tiene un mensaje, por lo que ini y fin deben estar a cero.
+		// Es el único caso en el que insertar un mensaje no aumenta el contador.
+		// Una tListaMensajesChat no puede estar vacía.
+		ch.listaMensajes.l[ch.listaMensajes.fin] = msg;
 	}
 }
 
@@ -37,10 +41,10 @@ bool cargar(ifstream &file, tChat &ch, string client) {
 		unsigned short numMensajes;
 		file >> numMensajes; // numMensajes es mayor o igual que 1.
 		
-		tListaMensajes lm;
-		error = init(lm, numMensajes);
-		if (!error) error = cargar(file, lm, ch.nombre, client);
-		ch.listaMensajes = lm;
+		tListaMensajesChat lmch;
+		error = init(lmch, numMensajes);
+		if (!error) error = cargar(file, lmch, ch.nombre, client);
+		ch.listaMensajes = lmch;
 		ch.owner = ch.listaMensajes.l[0].emisor; // El primer mensaje de un chat siempre existe.
 	}
 	

@@ -15,8 +15,8 @@
 // #### Declaraciones typedef ####
 
 // #### Implementaciones ####
-void enviar(const tMensaje &msg, tListaMensajes &buzon) {
-	insertar(buzon, msg);
+bool enviar(tMensaje &msg, tListaMensajes &buzon) {
+	return (buzon.counter == MAX_MENSAJES) || insertar(buzon, msg);
 }
 
 bool insertar(tListaUsuarios &db, tDatosCliente &cl) {
@@ -30,13 +30,13 @@ bool insertar(tListaUsuarios &db, tDatosCliente &cl) {
 			k = buscar(nombre, cl.listaChats);
 			if (k == -1) { // El chat es nuevo. Crearlo e insertarlo.
 				tChat ch;
-				init(ch);
-				ch.nombre = nombre;
-				ch.owner = nombre;
-				insertar(ch.listaMensajes, db.l[i].buzon.l[j]);
+				init(ch, nombre, nombre);
+				ch.listaMensajes.l[0] = db.l[i].buzon.l[j]; // Insertar el mensaje, pero no subir el contador porque el chat está vacío.
 				error = insertar(cl.listaChats, ch);
 			} else {
-				insertar(cl.listaChats.l[k].listaMensajes, db.l[i].buzon.l[j]);
+				if (insertar(cl.listaChats.l[k].listaMensajes, db.l[i].buzon.l[j])) { // Actualizar histórico.
+					mover(db.l[i].buzon.l[j], cl.cliente, cl.listaChats.l[k].nombre);
+				}
 			}
 		}
 		init(db.l[i].buzon); // Vaciar el buzón.

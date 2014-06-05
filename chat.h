@@ -6,9 +6,10 @@
 */
 
 // #### Librerías de sistema ####
+#include <ctime>
 
 // #### UDLs ####
-#include "listaMensajes.h"
+#include "listaMensajesChat.h"
 
 // #### Namespaces ####
 
@@ -18,12 +19,12 @@
 typedef struct {
 	string nombre; // identificador del usuario con el que se habla.
 	string owner; // identificador del usuario que inició el chat.
-	tListaMensajes listaMensajes;
+	tListaMensajesChat listaMensajes;
 } tChat;
 
 // #### Prototipos ####
 // inicializar un chat.
-void init(tChat &ch, string nombre = "", string owner = "");
+void init(tChat &ch, string nombre = "", string owner = "", tFecha fecha = time(0));
 // cargar un chat de un archivo.
 bool cargar(ifstream &file, tChat &ch, string client);
 // guardar chat en un archivo.
