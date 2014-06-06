@@ -17,8 +17,9 @@
 
 // #### Declaraciones typedef ####
 typedef struct {
-	tMensaje l[MAX_MENSAJES];
+	tMensaje *l;
 	unsigned short counter;
+	unsigned short capacidad;
 } tListaMensajes;
 
 // #### Prototipos ####

@@ -17,7 +17,9 @@
 
 // #### Implementaciones ####
 void init(tListaChats &lch) {
+	lch.l = new tChat[10];
 	lch.counter = 0;
+	lch.capacidad = 10;
 }
 
 bool cargar(string filename, tListaChats &lch) {
@@ -25,21 +27,24 @@ bool cargar(string filename, tListaChats &lch) {
 	file.open(filename.c_str());
 	if (!file.is_open()) return true;
 	else {
-		bool error = false; bool end = false;
+		bool error = false; int i = 0, n;
 
 		// Obtener el nombre del cliente:
 		string client = filename.substr(0, filename.length() - CHAT_LIST.length());
-
+		file >> n;
+		if (lch.l != NULL) delete[] lch.l;
+		if (n == 0) init(lch);
+		else {
+			lch.capacidad = ((n + 9) / 10) * 10;
+			lch.l = new tChat[lch.capacidad];
+		}
 		// Añadir chats:
-		while (!error && !end) {
+		while (!error && i<n) {
 			tChat ch;
 			init(ch);
 			error = cargar(file, ch, client);
 			if (!error) error = insertar(lch, ch);
-			else if (ch.nombre == CENTINELA) {
-				error = false; // Desactivar el flag de error en caso de que fuera el último elemento.
-				end = true;
-			}
+			i++;
 		}
 		file.close();
 
@@ -54,11 +59,11 @@ bool guardar(string filename, const tListaChats &lch) {
 	else {
 		bool error = false;
 		unsigned short i = 0;
+		file << lch.counter << endl;
 		while (i < lch.counter && !error) {
 			error = guardar(file, lch.l[i]);
 			i++;
 		}
-		file << CENTINELA;
 		file.close();
 		return error;
 	}
@@ -78,11 +83,21 @@ int buscar(string nombre, const tListaChats &lch) {
 }
 
 bool insertar(tListaChats &lch, tChat &ch) {
-	if (lch.counter < MAX_CHATS) {
+	if (lch.counter < lch.capacidad) {
 		lch.l[lch.counter] = ch;
 		lch.counter++;
-		return false;
-	} else return true;
+	} else {
+		tChat *old = lch.l;
+		lch.capacidad = (lch.capacidad*3) / 2 + 1;
+		lch.l = new tChat[lch.capacidad];
+		for (int i = 0; i < lch.counter; i++) {
+			lch.l[i] = old[i];
+		}
+		delete [] old;
+		lch.l[lch.counter] = ch;
+		lch.counter++;
+	}
+	return false;
 }
 
 bool eliminar(tListaChats &lch, int i) {

@@ -16,8 +16,9 @@
 
 // #### Declaraciones typedef ####
 typedef struct {
-	tChat l[MAX_CHATS];
+	tChat *l;
 	unsigned short counter;
+	unsigned short capacidad;
 } tListaChats;
 
 // #### Prototipos ####

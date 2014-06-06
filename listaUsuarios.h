@@ -16,7 +16,7 @@
 
 // #### Declaraciones typedef ####
 typedef struct {
-	tDatosUsuario l[MAX_USUARIOS];
+	tDatosUsuario *l[MAX_USUARIOS];
 	unsigned short counter;
 } tListaUsuarios;
 
@@ -30,6 +30,6 @@ bool guardar(string filename, const tListaUsuarios &db);
 // buscar en una lista de usuarios.
 int buscar(string user, const tListaUsuarios &db);
 // insertar en una lista de usuarios.
-bool insertar(tListaUsuarios &db, tDatosUsuario &user);
+bool insertar(tListaUsuarios &db, tDatosUsuario *user);
 
 #endif

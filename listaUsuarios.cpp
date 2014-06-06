@@ -29,11 +29,11 @@ bool cargar(string filename, tListaUsuarios &db) {
 		
 		// Añadir datos de usuario:
 		while (!error && !end) {
-			tDatosUsuario du;
-			init(du);
-			error = cargar(file, du);
+			tDatosUsuario * du = new tDatosUsuario;
+			init(*du);
+			error = cargar(file, *du);
 			if (!error) error = insertar(db, du);
-			else if (du.usuario == CENTINELA) {
+			else if (du->usuario == CENTINELA) {
 				error = false; // Desactivar el flag de error en caso de que fuera el último elemento.
 				end = true;
 			}
@@ -52,7 +52,7 @@ bool guardar(string filename, const tListaUsuarios &db) {
 		bool error = false;
 		unsigned short i = 0;
 		while (i < db.counter && !error) {
-			error = guardar(file, db.l[i]);
+			error = guardar(file, *db.l[i]);
 			i++;
 		}
 		file << CENTINELA;
@@ -61,7 +61,7 @@ bool guardar(string filename, const tListaUsuarios &db) {
 	}
 }
 
-bool insertar(tListaUsuarios &db, tDatosUsuario &user) {
+bool insertar(tListaUsuarios &db, tDatosUsuario *user) {
 	if (db.counter < MAX_USUARIOS) {
 		db.l[db.counter] = user;
 		db.counter++;
@@ -74,8 +74,8 @@ int buscar(string user, const tListaUsuarios &db) {
 	bool found = false;
 	while (!found && ini <= fin) {
 		mit = (ini + fin) / 2;
-		found = (db.l[mit].usuario == user);
-		if (db.l[mit].usuario > user) fin = mit - 1;
+		found = (db.l[mit]->usuario == user);
+		if (db.l[mit]->usuario > user) fin = mit - 1;
 		else ini = mit + 1;
 	}
 	return (found ? mit : -1);

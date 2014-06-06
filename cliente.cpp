@@ -114,7 +114,7 @@ bool manejarMenu(const tOpts &opts, tListaUsuarios &db, tDatosCliente &cl) {
 		if (cl.listaChats.counter <= opts.num || opts.num < 0) {
 			cout << WRONG_INDEX << endl;
 			pause();
-		} else entrar(db.l[buscar(cl.listaChats.l[opts.num].nombre, db)].buzon, cl, opts.num);
+		} else entrar(db.l[buscar(cl.listaChats.l[opts.num].nombre, db)]->buzon, cl, opts.num);
 		break;
 	case crear_ch:
 	{
@@ -139,7 +139,7 @@ bool manejarMenu(const tOpts &opts, tListaUsuarios &db, tDatosCliente &cl) {
 			init(ch, nombre, cl.cliente);
 			if (insertar(cl.listaChats, ch)) cout << TOO_MANY_CHATS << endl;
 			else {
-				enviar(cl.listaChats.l[cl.listaChats.counter - 1].listaMensajes.l[0], db.l[buscar(nombre, db)].buzon);
+				enviar(cl.listaChats.l[cl.listaChats.counter - 1].listaMensajes.l[0], db.l[buscar(nombre, db)]->buzon);
 				cout << NEW_CHAT_SUCCESS + nombre + "." << endl;
 			}
 			pause();

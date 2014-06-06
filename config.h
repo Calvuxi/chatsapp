@@ -17,8 +17,7 @@ using namespace std;
 const unsigned short MAX_USUARIOS = 20;
 const unsigned short MIN_USER_LENGTH = 4;
 const unsigned short MAX_USER_LENGTH = 50;
-const unsigned short MAX_MENSAJES = 5; // Da una excepción en ejecución si se pone a más de 206.
-const unsigned short MAX_CHATS = 15;
+const unsigned short MAX_MENSAJES = 15;
 const unsigned short OPT_WORDS = 2;
 
 const unsigned short L_PADDING = 5;

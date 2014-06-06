@@ -18,10 +18,10 @@
 
 // #### Implementaciones ####
 bool init(tListaMensajes &lm, unsigned short numMensajes) {
-	if (numMensajes <= MAX_MENSAJES) {
-		lm.counter = numMensajes;
-		return false;
-	} else return true;
+	lm.capacidad = ((numMensajes + 9) / 10) * 10;
+	lm.l = new tMensaje[lm.capacidad];
+	lm.counter = numMensajes;
+	return false;
 }
 
 bool cargar(ifstream &file, tListaMensajes &lm, string nombre, string client) {
@@ -41,21 +41,17 @@ bool cargar(ifstream &file, tListaMensajes &lm, string nombre, string client) {
 
 bool insertar(tListaMensajes &lm, tMensaje &msg) {
 	bool changes = false;
-	tMensaje oldmsg = msg;
-	if (lm.counter >= MAX_MENSAJES) {
-		changes = true;
-
-		oldmsg = lm.l[0]; // Mensaje a guardar en el histórico.
-
-		// Mover los mensajes hacia la izquierda, eliminando el más antiguo.
-		for (unsigned short i = 1; i < lm.counter; i++) lm.l[i - 1] = lm.l[i];
-		lm.counter--;
+	if (lm.counter >= lm.capacidad) {
+		tMensaje *old = lm.l;
+		lm.capacidad = (lm.capacidad * 3) / 2 + 1;
+		lm.l = new tMensaje[lm.capacidad];
+		for (int i = 0; i < lm.counter; i++) {
+			lm.l[i] = old[i];
+		}
+		delete[] old;
 	}
-
 	lm.l[lm.counter] = msg;
 	lm.counter++;
-	msg = oldmsg;
-
 	return changes;
 }
 
